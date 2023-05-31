@@ -144,11 +144,11 @@ function Login() {
               <div className="input-field">
                
                 <i className="fas fa-user"></i>
-                <input type="text" name="username"  placeholder="Username" />
+                <input type="text" name="username"  placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
               </div>
               <div className="input-field">
                 <i className="fas fa-lock"></i>
-                <input type={showPassword ? 'text' : 'password'}  name="password" placeholder="Password" />
+                <input type={showPassword ? 'text' : 'password'}  name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                 
               </div>
               
