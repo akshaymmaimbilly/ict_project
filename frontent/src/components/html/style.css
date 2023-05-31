@@ -1,0 +1,157 @@
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Startup</title>
+  <style>
+    /* Reset default browser styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Global styles */
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+    
+      padding: 20px;
+      background: rgb(195, 209, 205);
+    }
+    
+    nav img {
+      width: 16vw;
+      height: 6vh;
+      margin-left: 1%;
+    }
+
+  
+
+    /* Hero section */
+    #hero {
+      background-image: url('img1.jpg');
+    background-size: cover;
+    background-position: center;
+      text-align: center;
+      padding: 100px 0;
+      font-style: oblique;
+     
+    }
+
+    #hero h1 {
+      font-size: 90px;
+      margin-bottom: 10px;
+      color:rgb(0, 0, 0);
+    }
+
+    #hero p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: black;
+      color: #fff;
+      text-decoration: none;
+      border-radius:60px;
+    }
+
+    /* About section */
+    #about {
+      background-image: url('');
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+      padding: 100px 0;
+      background-color: rgb(195, 209, 205);
+    }
+
+    #about h2 {
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    /* Services section */
+    #services {
+      text-align: center;
+      padding: 100px 0;
+      background-color: #f2f2f2;
+    }
+
+    #services h2 {
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    #services ul {
+      list-style: none;
+      margin-top: 30px;
+    }
+
+    #services li {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+   
+
+    /* Footer */
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- HTML content here -->
+</body>
+</html>
+
+
+<style>
+  /* Services section */
+  #services {
+    text-align: center;
+   padding: 1rem 0;
+    background-color: #f2f2f2;
+  }
+
+  #services h2 {
+    font-size: 30px;
+    margin-bottom: 5rem ;
+  }
+
+  .service {
+    margin-bottom: 40px;
+  }
+
+  .service img {
+    width: 200px;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 60%  ;
+  }
+
+  .service h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .service p {
+    font-size: 18px;
+  }
+
+ 
+
+
