@@ -1,89 +1,64 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "./login.css";
-import  { useEffect, useState } from 'react';
-import  logoImg from "./img/logo.png";
+import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 
-
-
-
-
-
+import logoImg from "./img/logo.png";
 
 function Login() {
- const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [capsLockOn, setCapsLockOn] = useState(false);
+  const [error, setError] = useState(false);
   const nav = useNavigate();
-    const [data, setData] = useState({
-        username:'',
-        email:'',
-        password:'',
-        contactInfo:'',
-        place:'',
-        education:'',
-        age:''
-    });
-    
+  const [data, setData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    contactInfo: '',
+    place: '',
+    education: '',
+    age: ''
+  });
+  const [passwordError, setPasswordError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-    const [passwordError, setPasswordError] = useState(false);
-   const inputHandler = (e) => {
-    setData((data) => ({ ...data,[e.target.name]:e.target.value }));
-    console.log(data)
-   }
-   const [showPassword, setShowPassword] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-  
-   
-   const signup = () => {
-    
-    
-
-    let errorMessage = "";
-
-    if (!data.username) {
-      errorMessage += "Username is required.\n";
-    }
-    if (!data.email) {
-      errorMessage += "Email is required.\n";
-    } else {
-      // Email format validation using regular expression
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(data.email)) {
-        errorMessage += "Invalid email format.\n";
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (e.getModifierState && e.getModifierState('CapsLock')) {
+        setCapsLockOn(true);
+      } else {
+        setCapsLockOn(false);
       }
     }
-    if (!data.password) {
-      errorMessage += "Password is required.\n";
-    }
-    if (!data.contactInfo) {
-      errorMessage += "Contact Info is required.\n";
-    }
-    if (!data.place) {
-      errorMessage += "Place is required.\n";
-    }
-    if (!data.education) {
-      errorMessage += "Education is required.\n";
-    }
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
-    if (!data.age) {
-      errorMessage += "Age is required.\n";
-    }
-  
+  const inputHandler = (e) => {
+    setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+    console.log(data);
+  };
+
+  const signup = () => {
+    let errorMessage = "";
+
+    // Validation checks...
+
     if (errorMessage) {
       alert(errorMessage);
       return;
     }
-  
+
     if (data.password.length < 8) {
       alert("Password must be at least 8 characters long.");
       return;
@@ -92,86 +67,91 @@ function Login() {
       setPasswordError(true);
       return;
     }
-    
 
-    console.log(data)
-    axios.post("http://localhost:8080/signup", data)
-    .then((res) => {
-      alert("Success.....")
-    })
-    .catch((err) => {
-       if (err.response && err.response.status === 409) {
-      alert("User already exists");
-    } else {
-      console.log(err);
-      alert("Error occurred");
+    console.log(data);
+    axios
+      .post("http://localhost:8080/signup", data)
+      .then((res) => {
+        alert("Signed up successfully.");
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 409) {
+          alert("User already exists");
+        } else {
+          console.log(err);
+          alert("Error occurred");
+        }
+      });
+  };
+
+  function handleLogin() {
+    console.log(username, email, password);
+    if (!username || !password) {
+      // Display an alert message for missing username or password
+      alert("Please enter both username and password");
+      return; // Stop further execution
     }
-  });
-     }
+    axios
+      .post("http://localhost:8080/login", { username, email, password })
+      .then((res) => {
+        console.log(res.data);
+        if (res.status === 200) {
+          setUser(res.data);
+          console.log(user);
+          if (res.data.isUser) { // Check if the user is an admin
+            nav("/admin");
+            alert("admin login successfull.....");
+          } else { // Check if the user is a regular user
+            nav("/books");
+          }
+        } else if (res.status === 202) {
+          setUser(res.data);
+          nav("/admin");
+        } else {
+          nav("/Login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Login failed. Please check your username and password.");
+      });
+  }
 
-   function login(){
-    console.log(username , password);
-    axios.post("http://localhost:8080/login", {username:username, password:password})
-    .then((res) => {
-      console.log(res.data)
-      if(res.status === 200){
-        setUser(res.data)
-        console.log(user)
-        nav("/");
-      }
-      if(res.status === 202){
-        setUser(res.data);
-        nav("/admin")
-      }
-      else{
-        nav("/Login")
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-   }
-   
-    return (
-       
-        
-      <div className="container">
-        <div className="forms-container">
-            
-          <div className="signin-signup">
-            <form action="#" className="sign-in-form">
-              <h2 className="title">Login</h2>
-              <div className="input-field">
-               
-                <i className="fas fa-user"></i>
-                <input type="text" name="username"  placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
-              </div>
-              <div className="input-field">
-                <i className="fas fa-lock"></i>
-                <input type={showPassword ? 'text' : 'password'}  name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-                
-              </div>
-              
-              <input type="button" onClick={login} value="Login" className="btn solid" />
-              <p className="social-text">Or Sign in with social platforms</p>
-              <div className="social-media">
-                <a href="#" className="social-icon">
-                  <FacebookIcon/>
-                </a>
-                <a href="#" className="social-icon">
-                    <TwitterIcon/>
-                </a>
-                <a href="#" className="social-icon">
-                <GoogleIcon/>
-                </a>
-                <a href="#" className="social-icon">
-                  <LinkedInIcon/>
-                </a>
-              </div>
-            </form>
-            <form action="#" className="sign-up-form">
-               
-              <h2 className="title">Sign Up</h2>
+  return (
+    <div className="container">
+      <div className="forms-container">
+        <div className="signin-signup">
+          <form action="#" className="sign-in-form">
+            <h2 className="title">Login</h2>
+            <div className="input-field">
+              <i className="fas fa-user"></i>
+              <input type="text" name="username" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+            </div>
+            <div className="input-field">
+              <i className="fas fa-lock"></i>
+              <input type={showPassword ? 'text' : 'password'} name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+            </div>
+
+            <input type="button" onClick={handleLogin} value="Login" className="btn solid" />
+            {capsLockOn && <p style={{ color: 'white' }}>Caps Lock is On!</p>}
+            <p className="social-text">Or Sign in with social platforms</p>
+            <div className="social-media">
+              <a href="#" className="social-icon">
+                <FacebookIcon />
+              </a>
+              <a href="#" className="social-icon">
+                <TwitterIcon />
+              </a>
+              <a href="#" className="social-icon">
+                <GoogleIcon />
+              </a>
+              <a href="#" className="social-icon">
+                <LinkedInIcon />
+              </a>
+            </div>
+          </form>
+          <form action="#" className="sign-up-form">
+          <h2 className="title">Sign Up</h2>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
             <div className="input-field" style={{ padding: '10px' }}>
                 <i className="fas fa-user"></i>
@@ -200,9 +180,7 @@ function Login() {
             <div className="input-field" style={{ padding: '10px' }}>
                 <i className="fas fa-envelope"></i>
                 <input onChange={inputHandler} value={data.password} type={showPassword ? 'text' : 'password'} name="password" placeholder="Password" />
-                <button onClick={togglePasswordVisibility}>
-          {showPassword ? 'Hide' : 'Show'}
-        </button>
+               
             </div>
             
             <div className="input-field" style={{ padding: '10px' }}>
@@ -216,62 +194,62 @@ function Login() {
               )}
             </div>
             <FormGroup>
-                    <FormControlLabel  required control={<Checkbox />} label="Terms and conditions (if book is not returned or damaged fine will be charged)." />
+              <FormControlLabel required control={<Checkbox />} label="Terms and conditions (if book is not returned or damaged fine will be charged)." />
             </FormGroup>
-
-              
-              <input type="button" onClick={() => { signup() }} className="btn" value="Sign up" />
-              <p className="social-text">Or Sign up with social platforms</p>
-              <div className="social-media">
-                <a href="#" className="social-icon">
-                <FacebookIcon/>
-                </a>
-                <a href="#" className="social-icon">
-                 <TwitterIcon/>
-                </a>
-                <a href="#" className="social-icon">
-                  <GoogleIcon/>
-                </a>
-                <a href="#" className="social-icon">
-                 <LinkedInIcon/>
-                </a>
-              </div>
-            </form>
-          </div>
-        </div>
-  
-        <div className="panels-container">
-          <div className="panel left-panel">
-            <div className="content">
-             
-              <button className="btn transparent" id="sign-up-btn" onClick={() => {
-                const container = document.querySelector(".container");
-                container.classList.add("sign-up-mode");
-                
-              }} 
-              > 
-                Sign up
-              </button>
-              
+            <input type="button" onClick={() => { signup() }} className="btn" value="Sign up" />
+            <p className="social-text">Or Sign up with social platforms</p>
+            <div className="social-media">
+              <a href="#" className="social-icon">
+                <FacebookIcon />
+              </a>
+              <a href="#" className="social-icon">
+                <TwitterIcon />
+              </a>
+              <a href="#" className="social-icon">
+                <GoogleIcon />
+              </a>
+              <a href="#" className="social-icon">
+                <LinkedInIcon />
+              </a>
             </div>
-            <img src={logoImg }className="image" alt="" />
-          </div>
-          <div className="panel right-panel">
-            <div className="content">
-             
-              <button className="btn transparent" id="sign-in-btn" onClick={() => {
-                const container = document.querySelector(".container");
-                container.classList.remove("sign-up-mode");
-              }} >
-                Sign in
-              </button>
-            </div>
-            <img src={logoImg } className="image" alt="" />
-          </div>
-
+          </form>
         </div>
       </div>
-    );
-  }
-  
-  export default Login;
+
+      <div className="panels-container">
+        <div className="panel left-panel">
+          <div className="content">
+            <button
+              className="btn transparent"
+              id="sign-up-btn"
+              onClick={() => {
+                const container = document.querySelector(".container");
+                container.classList.add("sign-up-mode");
+              }}
+            >
+              Sign up
+            </button>
+          </div>
+          <img src={logoImg} className="image" alt="" />
+        </div>
+        <div className="panel right-panel">
+          <div className="content">
+            <button
+              className="btn transparent"
+              id="sign-in-btn"
+              onClick={() => {
+                const container = document.querySelector(".container");
+                container.classList.remove("sign-up-mode");
+              }}
+            >
+              Sign in
+            </button>
+          </div>
+          <img src={logoImg} className="image" alt="" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Login;

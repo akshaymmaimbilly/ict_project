@@ -5,6 +5,8 @@ const cors = require("cors");
 const bcrypt = require("bcrypt")
 const app = express();
 const session = require("express-session");
+const bookModel = require('./bookModel');
+
 app.use(cors({
   origin:'http://localhost:3000',
   credentials:true
@@ -31,25 +33,29 @@ app.use((req, res, next) => {
 
 
 
+
+
 app.post("/signup", async (req, res) => {
-  const { username, email ,password} = req.body;
+  const { username, email,password } = req.body;
+  console.log(password)
   
   const doc = new userModel(req.body);
   console.log(req.body)
   try{
     const existingUser = await userModel.findOne({
-      $or: [{ username }, { email }],
+      $or: [{ username }, { email } ,{password}],
     });
     if (existingUser) {
       return res.status(409).send("Username or email already exists");
   
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
+    //const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new userModel({
       username: username,
       email: email,
-      password: hashedPassword,
+      password: password,
+      isUser: false
     });
 
     await newUser.save();
@@ -66,29 +72,72 @@ app.post("/signup", async (req, res) => {
 })
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
+  console.log(password)
   if (req.session.user){
  
     return res.send("User already exists");
     
   }
   try {
-    const user = await userModel.findOne({ username: username });
+    const user = await userModel.findOne({ username: username ,password: password});
     if (!user) {
-      return res.send("User not found");
+      return res.status(404).send("User not found");
     }
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      return res.send("Incorrect password");
+    console.log(user)
+    //const passwordMatch = await bcrypt.compare(password, user.password);
+    if (user.password != password) {
+      return res.status(401).send("Incorrect password!");
     }
     if (user.username === "Akshaymm") {
       return res.status(202).send(user);
     }
+    
+    
     return res.status(200).send(user);
   } catch (err) {
     console.log(err);
-    res.send("Error occurred");
+    res.status(500).send("Error occurred");
   }
 });
+
+app.post('/add', async (req, res) => {
+  const {
+    bookno, bookname, genre, author, isbn, publicationYear, price, description, image,
+  } = req.body;
+
+  try {
+    const newBook = new bookModel({
+      bookno,
+      bookname,
+      genre,
+      author,
+      isbn,
+      publicationYear,
+      price,
+      description,
+      // image,
+    });
+    await newBook.save();
+    res.send('Successfully added');
+    
+  } catch (error) {
+    console.error('Error adding book:', error);
+    res.status(500).send('Error adding book');
+   
+   
+  }
+});
+app.get('/viewbooks', async (req, res) => {
+  try {
+    const books = await bookModel.find();
+    res.json(books);
+  } catch (error) {
+    console.error('Error retrieving books:', error);
+    res.status(500).send('Error retrieving books');
+  }
+});
+
+
 
 
 

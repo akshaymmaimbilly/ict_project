@@ -7,6 +7,8 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import AutoStoriesOutlinedIcon from '@mui/icons-material/AutoStoriesOutlined';
 import SettingsSuggestOutlinedIcon from '@mui/icons-material/SettingsSuggestOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import AttributionIcon from '@mui/icons-material/Attribution';
+import { Button } from '@mui/material';
 
 const Sidebar = () => {
   return (
@@ -17,29 +19,31 @@ const Sidebar = () => {
       <hr/>
       <div className='center'>
 <ul>
-    <p className="title">Home</p>
+    <p className="title" style={{color:'green'}}>Home</p>
     <li>
-       <DashboardIcon className='icon'/> <span>Dashboard</span>
+    <Button onClick={() => window.location.href = "/admin"}>  <DashboardIcon className='icon'/> <span>Dashboard</span></Button>
     </li>
-    <p className="title">Details</p>
+    <p className="title" style={{color:'green'}}>Details</p>
 
     <li>
-       <LibraryBooksIcon className='icon'/> <span>Books</span>
+    <Button> <LibraryBooksIcon className='icon'/> <span>Books</span></Button>
     </li>
     <li>
-        <AutoStoriesOutlinedIcon className='icon'/><span>Rented</span>
+    <Button>   <AutoStoriesOutlinedIcon className='icon'/><span>Rented</span></Button>
     </li><li>
-        <PersonOutlineIcon className='icon'/><span>Users</span>
+    <Button>  <PersonOutlineIcon className='icon'/><span>Users</span></Button>
+    </li><li>
+    <Button>  <AttributionIcon className='icon'/><span>Authors</span></Button>
     </li>
-    <p className="title">Set-Up</p>
+    <p className="title"style={{color:'green'}}>Set-Up</p>
 <li>
-        <AdminPanelSettingsIcon className='icon'/><span>Admins</span>
+      <Button>  <AdminPanelSettingsIcon className='icon'/><span>Admins</span></Button>
     </li>
     <li>
-        <SettingsSuggestOutlinedIcon className='icon'/><span>settings</span>
+    <Button>   <SettingsSuggestOutlinedIcon className='icon'/><span>settings</span></Button>
     </li>
     <li>
-        <LogoutOutlinedIcon className='icon'/><span>Logout</span>
+     <Button  onClick={() => window.location.href = "/"}>   <LogoutOutlinedIcon className='icon'/><span>Logout</span></Button>
     </li>
 </ul>
       </div>

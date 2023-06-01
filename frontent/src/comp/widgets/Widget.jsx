@@ -16,7 +16,7 @@ const Widget = ({ type }) => {
     case "user":
       data = {
         title: "USERS",
-        link: "See all users",
+        
         icon: (
           <PersonOutlinedIcon
             className="icons"
@@ -31,7 +31,7 @@ const Widget = ({ type }) => {
     case "books":
       data = {
         title: "BOOKS",
-        link: "View all Books",
+       
         icon: (
           <LibraryBooksIcon
             className="icons"
@@ -46,7 +46,7 @@ const Widget = ({ type }) => {
     case "rented":
       data = {
         title: "RENTED",
-        link: "View Rented Books",
+       
         icon: (
           <ShoppingCartOutlinedIcon
             className="icons"
@@ -58,7 +58,7 @@ const Widget = ({ type }) => {
     case "authors":
       data = {
         title: "Authors",
-        link: "View Authors",
+       
         icon: (
           <AttributionIcon
             className="icons"

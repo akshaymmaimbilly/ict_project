@@ -15,7 +15,7 @@ const Chart = () => {
 
   return (
     <div className='chart'>
-              <div className="title">Last six months renting</div> 
+              <div className="title" style={{color:'green'}}>Last six months renting</div> 
         <ResponsiveContainer width="100%" height={500}>
           <AreaChart
             width={100}

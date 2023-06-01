@@ -19,9 +19,9 @@ class M extends React.Component {
         <section id="hero">
           <h1>Welcome to Book's Corner</h1>
           <p>The more you Read. The more you Rich </p>
-          <Button onClick={() => window.location.href = "/login"} > <Link to="/login">
-          SIGN UP
-          </Link>
+          <Button onClick={() => window.location.href = "/login"} > 
+          SIGN UP / SIGN IN
+        
         </Button>
           
         </section>
@@ -42,7 +42,7 @@ class M extends React.Component {
           </div>
           <div className="service">
             <img src={serviceImg3} alt="Service 3" />
-            <h3>DISCOVAR MANY RESOURCES</h3>
+            <h3>DISCOVER MANY RESOURCES</h3>
             <p>Resource Discovery and Search: Online libraries often provide advanced search tools and filters to help users discover books and resources of interest. Users can search by title, author, genre, keywords, and other criteria to find relevant books quickly.
             </p>
           </div>

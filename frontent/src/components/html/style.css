@@ -22,7 +22,7 @@
     header {
     
       padding: 20px;
-      background: rgb(195, 209, 205);
+      background:rgb(158, 233, 208);
     }
     
     nav img {
@@ -41,30 +41,34 @@
       text-align: center;
       padding: 100px 0;
       font-style: oblique;
-     
+      filter: blur();
     }
 
     #hero h1 {
+      text-shadow: 6px 9px #000000;
       font-size: 90px;
       margin-bottom: 10px;
-      color:rgb(0, 0, 0);
+      color:rgb(158, 233, 208);
     }
 
     #hero p {
-      font-size: 18px;
+      font-size: 20px;
       margin-bottom: 30px;
-      font-weight: bold;
+      font-weight: bolder;
+      color:rgb(158, 233, 208);
+      text-shadow: 2px 3px #000000;
     }
 
-    .btn {
+    #hero Button {
+      border-radius:60px;
       display: inline-block;
       padding: 10px 20px;
       background-color: black;
-      color: #fff;
+      color: rgb(158, 233, 208);
       text-decoration: none;
-      border-radius:60px;
     }
 
+    
     /* About section */
     #about {
       background-image: url('');
@@ -84,7 +88,7 @@
     #services {
       text-align: center;
       padding: 100px 0;
-      background-color: #f2f2f2;
+      background-color: rgb(198, 204, 202);
     }
 
     #services h2 {
