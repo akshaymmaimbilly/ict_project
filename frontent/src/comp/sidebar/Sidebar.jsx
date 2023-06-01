@@ -26,7 +26,7 @@ const Sidebar = () => {
     <p className="title" style={{color:'green'}}>Details</p>
 
     <li>
-    <Button> <LibraryBooksIcon className='icon'/> <span>Books</span></Button>
+    <Button onClick={() => window.location.href = "/addbooks"}> <LibraryBooksIcon className='icon'/> <span>Books</span></Button>
     </li>
     <li>
     <Button>   <AutoStoriesOutlinedIcon className='icon'/><span>Rented</span></Button>

@@ -6,6 +6,9 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import Bookform from "./components/Bookform";
+import Main from "./components/Main";
+import BookList from "./components/Main";
+// import AddBook from "./components/AddBook";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -13,13 +16,15 @@ function App() {
   return (
     <div className={darkMode ? "app dark" : "app" }>
 
-      <Bookform/>
-{/* <Router>
+      <BookList/>
+{/* <Router> */}
 
-      <Routes>
+      {/* <Routes>
       <Route path="/" element={<M />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Home />} />
+        <Route path="/addbooks" element={<Bookform />} />
+        <Route path="/books"element={<BookList/>}/>
         
         
       </Routes>

@@ -127,7 +127,7 @@ app.post('/add', async (req, res) => {
    
   }
 });
-app.get('/viewbooks', async (req, res) => {
+app.get('/viewbooks', async (req , res) => {
   try {
     const books = await bookModel.find();
     res.json(books);
@@ -136,6 +136,51 @@ app.get('/viewbooks', async (req, res) => {
     res.status(500).send('Error retrieving books');
   }
 });
+
+// Create a new comment for a book
+app.post('/books/:id/comments', async (req, res) => {
+  const { id } = req.params;
+  const { comment } = req.body;
+
+  try {
+    const book = await bookModel.findById(id);
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+
+    book.comments.push({ text: comment });
+    await book.save();
+
+    res.status(201).json(book.comments);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Create a new like for a comment
+app.post('/books/:id/likes', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const book = await bookModel.findById(id);
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+
+    const comment = book.comments.id(id);
+    if (!comment) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+
+    comment.likes += 1;
+    await book.save();
+
+    res.status(201).json(comment);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 
 

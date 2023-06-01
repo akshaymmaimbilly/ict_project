@@ -1,6 +1,8 @@
+import { Grid, TextField, InputLabel, Input, Typography, Box, Button } from '@mui/material';
+import React from 'react';
+// import './addbook.css';
 
-
-import React, { useState ,useEffect } from 'react';
+import  { useState ,useEffect } from 'react';
 
 const Bookform = () => {
     const [bookData, setBookData] = useState({
@@ -72,87 +74,78 @@ const Bookform = () => {
   
 
   return (
-    <div>
-
-
-    
-      <h2>Add a Book</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Book No:</label>
-        <input
-          type="text"
-          name="bookno"
-          value={bookData.bookno}
-          onChange={handleChange}
-        />
-
-        <label>Book Name:</label>
-        <input
-          type="text"
-          name="bookname"
-          value={bookData.bookname}
-          onChange={handleChange}
-        />
-
-        <label>Genre:</label>
-        <input
-          type="text"
-          name="genre"
-          value={bookData.genre}
-          onChange={handleChange}
-        />
-
-        <label>Author:</label>
-        <input
-          type="text"
-          name="author"
-          value={bookData.author}
-          onChange={handleChange}
-        />
-
-        <label>ISBN:</label>
-        <input
-          type="text"
-          name="isbn"
-          value={bookData.isbn}
-          onChange={handleChange}
-        />
-
-        <label>Publication Year:</label>
-        <input
-          type="text"
-          name="publicationYear"
-          value={bookData.publicationYear}
-          onChange={handleChange}
-        />
-
-        <label>Price:</label>
-        <input
-          type="text"
-          name="price"
-          value={bookData.price}
-          onChange={handleChange}
-        />
-
-        <label>Description:</label>
-        <textarea
-          name="description"
-          value={bookData.description}
-          onChange={handleChange}
-        ></textarea>
-
-        {/* <label>Image URL:</label>
-        <input
-          type="text"
-          name="image"
-          value={bookData.image}
-          onChange={handleChange}
-        /> */}
-
-        <button type="submit">Add Book</button>
-      </form>
-    </div>
-  );
+    <div style={{ padding: '100px' }}>
+    <Typography variant='h2'>Add New Books...</Typography>
+    <br />
+    <form onSubmit={handleSubmit}>
+      <Box display='grid' gridColumn={2} gridRow={2}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <Box display="flex" alignItems="center">
+              
+              <TextField label='book no' value={bookData.bookno}
+          onChange={handleChange}variant='outlined' />
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Box display="flex" alignItems="center">
+              
+              <TextField label='book name' value={bookData.bookname}
+          onChange={handleChange}variant='outlined' />
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Box display="flex" alignItems="center">
+              
+              <TextField label='genre' value={bookData.genre}
+          onChange={handleChange}variant='outlined' />
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Box display="flex" alignItems="center">
+              
+              <TextField label='author'value={bookData.author}
+          onChange={handleChange} variant='outlined' />
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Box display="flex" alignItems="center">
+              
+              <TextField label='ISBN' value={bookData.isbn}
+          onChange={handleChange}variant='outlined' />
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Box display="flex" alignItems="center">
+              
+              <TextField label='publication year'value={bookData.publicationYear}
+          onChange={handleChange} variant='outlined' />
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Box display="flex" alignItems="center">
+              
+              <TextField label='price'value={bookData.price}
+          onChange={handleChange} variant='outlined' />
+            </Box>
+          </Grid>
+          {/* <Grid item xs={12}>
+            <InputLabel>Image</InputLabel>
+            <Input type='file' />
+          </Grid> */}
+          <Grid item xs={12}>
+            <TextField variant='outlined'value={bookData.description}
+          onChange={handleChange} label='Description' fullWidth multiline rows={4} />
+          </Grid>
+        </Grid>
+        <Button type='submit' variant="contained" size="large">
+          ADD BOOK
+        </Button>
+      </Box>
+    </form>
+  </div>
+);
 };
+
 
 export default Bookform;
