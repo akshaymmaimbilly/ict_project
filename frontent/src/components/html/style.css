@@ -71,9 +71,9 @@
     
     /* About section */
     #about {
-      background-image: url('');
-      background-size: cover;
-      background-position: center;
+      /* background-image: url(''); */
+      /* background-size: cover;
+      background-position: center; */
       text-align: center;
       padding: 100px 0;
       background-color: rgb(195, 209, 205);

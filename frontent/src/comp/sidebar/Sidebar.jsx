@@ -31,7 +31,7 @@ const Sidebar = () => {
     <li>
     <Button>   <AutoStoriesOutlinedIcon className='icon'/><span>Rented</span></Button>
     </li><li>
-    <Button>  <PersonOutlineIcon className='icon'/><span>Users</span></Button>
+    <Button onClick={() => window.location.href = "/user"}>  <PersonOutlineIcon className='icon'/><span>Users</span></Button>
     </li><li>
     <Button>  <AttributionIcon className='icon'/><span>Authors</span></Button>
     </li>

@@ -6,31 +6,26 @@ mongoose.connect("mongodb+srv://akshaymmaimbilly:Akshaymm@cluster0.iyvhtug.mongo
 let Schema = mongoose.Schema;
 
 const bookSchema = new Schema({
-    bookno: {
-      type: Number,
-      unique: true,
-      required: true,
-    },
+    bookno: Number,
     bookname: String,
-    author: String,
+   
     genre: String,
-    comments: [{ text: String, 
-    likes: { type: Number, default: 0 } }],
+    isbn:String,
+   
     
-    publicationYear: {
-      type: String,
-      required: true,
-    },
-    price:{
-      type:Number,
-      required:true,
-    },
+    publicationYear:String,
+   
+    author: String,
+    price:Number,
+
     description: String,
    
     // img:{
     //   type:String,
     //   required:true
     // }
+    comments: [{ text: String, 
+      likes: { type: Number, default: 0 } }],
   });
   
 
