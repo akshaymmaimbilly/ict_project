@@ -12,6 +12,7 @@ import Main from "./components/Main";
 // import Book from "./components/Book";
 import AddBook from "./components/AddBook";
 import Userlist from "./components/Userlist";
+import Bookdetails from "./components/Bookdetails";
 // import AddBook from "./components/AddBook";
 
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/addbooks" element={<AddBook />} />
         <Route path="/books"element={<Main/>}/>
         <Route path="/user"element={<Userlist/>}/>
+        <Route path="/bookdetails"element={<Bookdetails/>}/>
         
         
       </Routes> 

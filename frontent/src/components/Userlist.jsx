@@ -52,36 +52,38 @@ const Userlist = () => {
       console.error('Error deleting user:', error);
     }
   };
-
+  console.log(users)
   return (
     <div>
       <h1>User List</h1>
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Action</th>
-          </tr>
+            <th>ID</th>&nbsp;
+            <th>Name</th>&nbsp;
+            <th>Email</th>&nbsp;
+            
+            <th>Action</th>&nbsp;
+          </tr>&nbsp;
         </thead>
         <tbody>
           {users.map((user) => (
             <tr key={user._id}>
-              <td>{user._id}</td>
+              <td>{user._id}</td>&nbsp;
               <td>
                 {editingUserId === user._id ? (
                   <input
                     type="text"
                     name="name"
-                    value={editedUser.name || ''}
+                    value={editedUser.username || ''}
                     onChange={handleInputChange}
                   />
                 ) : (
-                  user.name
+                  user.username
                 )}
               </td>
-              <td>
+              <td>{ user.phonenumber }</td>&nbsp;
+              <td>&nbsp;
                 {editingUserId === user._id ? (
                   <input
                     type="email"
@@ -92,8 +94,8 @@ const Userlist = () => {
                 ) : (
                   user.email
                 )}
-              </td>
-              <td>
+              </td>&nbsp;
+              <td>&nbsp;
                 {editingUserId === user._id ? (
                   <>
                     <button onClick={handleSave}>Save</button>
