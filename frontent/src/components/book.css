@@ -2,7 +2,7 @@
 *{
     padding: 0;
     margin: 0;
-    font-family: 'Poppins', sans-serif;
+    /* font-family: 'Poppins', sans-serif; */
 }
 
 :root{
@@ -256,3 +256,11 @@ li{
       }
       /* Add more CSS styles as needed for other elements */
       
+      /* .my-modal-class .modal-dialog {
+        height: 80vh;
+        overflow: auto;
+      }
+      .mymodal{
+        height: 80vh;
+        overflow: auto; 
+      } */
