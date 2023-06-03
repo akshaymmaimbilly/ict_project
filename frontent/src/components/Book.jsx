@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
+import Bookdetails from './Bookdetails'; // Import the Bookdetails component
+import BookPage from './BookPage'; // Import the BookPage component
 
 const Book = () => {
   const [blogs, setBlogs] = useState([]);
@@ -116,49 +118,10 @@ const Book = () => {
         })}
       </div>
 
-      {selectedBook && (
-        <div>
-          <Card>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {selectedBook.bookname}
-              </Typography>
-              <Typography variant="h6" color="text.secondary">
-                {selectedBook.author}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {selectedBook.genre}
-              </Typography>
-              <Divider />
-
-              <Box p={2}>
-                <Typography variant="subtitle1">Comments:</Typography>
-                {selectedBook.comments.map((comment) => (
-                  <Typography key={comment._id} variant="body2">
-                    {comment.text}
-                  </Typography>
-                ))}
-                <form onSubmit={() => handleCommentSubmit(selectedBook._id)}>
-                  <TextField
-                    label="Add a comment"
-                    variant="outlined"
-                    size="small"
-                    value={comment}
-                    onChange={handleCommentChange}
-                    fullWidth
-                  />
-                  <Button type="submit" variant="contained" color="primary" size="small">
-                    Submit
-                  </Button>
-                </form>
-              </Box>
-            </CardContent>
-          </Card>
-
-          <Button variant="outlined" onClick={handleCloseDetails}>
-            Close
-          </Button>
-        </div>
+      {selectedBook ? (
+        <BookPage book={selectedBook} onClose={handleCloseDetails} />
+      ) : (
+        <Bookdetails />
       )}
     </div>
   );
