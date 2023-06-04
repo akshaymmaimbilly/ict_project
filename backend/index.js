@@ -2,10 +2,10 @@ const express = require("express");
 const userModel = require("./userModel");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt")
 const app = express();
 const session = require("express-session");
-const bookModel = require("./bookModel");
+const bookModel = require('./bookModel');
 
 app.use(cors({
   origin: 'http://localhost:3000',
@@ -21,7 +21,8 @@ app.use(session({
   cookie: {
     maxAge: 60 * 60 * 24 * 30
   }
-}));
+})
+);
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -30,16 +31,25 @@ app.use((req, res, next) => {
   next();
 });
 
+
+
+
+
 app.post("/signup", async (req, res) => {
   const { username, email, password } = req.body;
+  console.log(password)
 
+  const doc = new userModel(req.body);
+  console.log(req.body)
   try {
     const existingUser = await userModel.findOne({
       $or: [{ username }, { email }, { password }],
     });
     if (existingUser) {
       return res.status(409).send("Username or email already exists");
+
     }
+    //const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new userModel({
       username: username,
@@ -51,32 +61,38 @@ app.post("/signup", async (req, res) => {
     await newUser.save();
 
     res.send("Successfully signed up");
-  } catch (err) {
-    console.log(err);
-    res.status(400).send("Error occurred");
   }
-});
 
+
+
+  catch (err) {
+    console.log(err);
+    res.status(400).send("error occured")
+  }
+
+})
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
-
+  console.log(password)
   if (req.session.user) {
-    return res.send("User already exists");
-  }
 
+    return res.send("User already exists");
+
+  }
   try {
     const user = await userModel.findOne({ username: username, password: password });
     if (!user) {
       return res.status(404).send("User not found");
     }
-
-    if (user.password !== password) {
+    console.log(user)
+    //const passwordMatch = await bcrypt.compare(password, user.password);
+    if (user.password != password) {
       return res.status(401).send("Incorrect password!");
     }
-
     if (user.username === "Akshaymm") {
       return res.status(202).send(user);
     }
+
 
     return res.status(200).send(user);
   } catch (err) {
@@ -85,9 +101,9 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/add", async (req, res) => {
+app.post('/add', async (req, res) => {
   const {
-    bookno, bookname, genre, author, isbn, publicationYear, price, description,
+    bookno, bookname, genre, author, isbn, publicationYear, price, description, 
   } = req.body;
 
   try {
@@ -100,25 +116,29 @@ app.post("/add", async (req, res) => {
       publicationYear,
       price,
       description,
+      // image,
     });
     await newBook.save();
-    res.send("Successfully added");
+    res.send('Successfully added');
+
   } catch (error) {
-    console.error("Error adding book:", error);
-    res.status(500).send("Error adding book");
+    console.error('Error adding book:', error);
+    res.status(500).send('Error adding book');
+
+
   }
 });
-
-app.get("/viewbooks", async (req, res) => {
+app.get('/viewbooks', async (req, res) => {
   try {
     const books = await bookModel.find();
     return res.json(books);
   } catch (error) {
-    console.error("Error retrieving books:", error);
-    res.status(500).send("Error retrieving books");
+    console.error('Error retrieving books:', error);
+    res.status(500).send('Error retrieving books');
   }
 });
 
+// Create a new comment for a book
 app.post('/books/:id/comments', async (req, res) => {
   const { id } = req.params;
   const { comment } = req.body;
@@ -138,6 +158,7 @@ app.post('/books/:id/comments', async (req, res) => {
   }
 });
 
+// Create a new like for a comment
 app.post('/books/:id/likes', async (req, res) => {
   const { id } = req.params;
 
@@ -160,7 +181,6 @@ app.post('/books/:id/likes', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
 app.get("/viewusers", async (req, res) => {
   try {
     const users = await userModel.find();
@@ -171,25 +191,9 @@ app.get("/viewusers", async (req, res) => {
   }
 });
 
-app.get("/users/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const user = await userModel.findById(id);
-    if (!user) {
-      return res.status(404).send("User not found");
-    }
-
-    res.json(user);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Error occurred");
-  }
-});
-
 app.put("/users/:id", async (req, res) => {
-  const { id } = req.params;
-  const { username, email, password } = req.body;
+  
+  const { name, email } = req.body;
 
   try {
     const user = await userModel.findById(id);
@@ -197,9 +201,8 @@ app.put("/users/:id", async (req, res) => {
       return res.status(404).send("User not found");
     }
 
-    user.username = username;
+    user.name = name;
     user.email = email;
-    user.password = password;
     await user.save();
 
     res.json(user);
@@ -208,7 +211,6 @@ app.put("/users/:id", async (req, res) => {
     res.status(500).send("Error occurred");
   }
 });
-
 app.delete("/users/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -225,51 +227,7 @@ app.delete("/users/:id", async (req, res) => {
   }
 });
 
-app.put("/books/:id", async (req, res) => {
-  const { id } = req.params;
-  const {
-    bookname, genre, author, isbn, publicationYear, price, description,
-  } = req.body;
-
-  try {
-    const book = await bookModel.findById(id);
-    if (!book) {
-      return res.status(404).send("Book not found");
-    }
-
-    book.bookname = bookname;
-    book.genre = genre;
-    book.author = author;
-    book.isbn = isbn;
-    book.publicationYear = publicationYear;
-    book.price = price;
-    book.description = description;
-
-    await book.save();
-
-    res.json(book);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Error occurred");
-  }
-});
-
-app.delete("/books/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const book = await bookModel.findByIdAndRemove(id);
-    if (!book) {
-      return res.status(404).send("Book not found");
-    }
-
-    res.json(book);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Error occurred");
-  }
-});
 
 app.listen(8080, () => {
   console.log("Server started");
-});
+})

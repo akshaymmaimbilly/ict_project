@@ -59,13 +59,17 @@ const Userlist = () => {
       <table>
      
           <tr>
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of db46e46 (04.06.2023)
             <th>ID</th>&nbsp;
             <th>Name</th>&nbsp;
             <th>Email</th>&nbsp;
             
             <th>Action</th>&nbsp;
           </tr>&nbsp;
+<<<<<<< HEAD
           <tr>
             <th>ID</th>
             <th>Name</th>
@@ -75,6 +79,9 @@ const Userlist = () => {
           </tr>
 
         
+=======
+        </thead>
+>>>>>>> parent of db46e46 (04.06.2023)
         <tbody>
           {users.map((user) => (
             <tr key={user._id}>
@@ -106,25 +113,12 @@ const Userlist = () => {
               </td>&nbsp;
               <td>&nbsp;
                 {editingUserId === user._id ? (
-                  <input
-                    type="text"
-                    name="phonenumber"
-                    value={editedUser.phonenumber || ''}
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  user.phonenumber
-                )}
-              </td>
-              <td>
-                {editingUserId === user.id ? (
                   <>
-                    
+                    <button onClick={handleSave}>Save</button>
+                    <button onClick={handleCancel}>Cancel</button>
                   </>
                 ) : (
                   <>
-                  <button onClick={handleSave}>Save</button>
-                    <button onClick={handleCancel}>Cancel</button>
                     <button onClick={() => handleEdit(user)}>Edit</button>
                     <button onClick={() => handleDelete(user._id)}>Delete</button>
                   </>
