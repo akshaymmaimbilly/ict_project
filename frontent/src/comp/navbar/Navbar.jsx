@@ -33,6 +33,7 @@ console.log("clicked");
 console.log(light);
 
   return (
+    <div style={{ padding: '100px' }}>
     <div className='navbar'>
     <div className="wrapper">
       <div className="search">
@@ -62,6 +63,7 @@ console.log(light);
             />
           </div>
       </div>
+    </div>
     </div>
     </div>
   )

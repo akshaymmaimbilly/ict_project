@@ -1,22 +1,34 @@
-import "./widget.scss";
+import React, { useEffect, useState } from 'react';
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import AttributionIcon from '@mui/icons-material/Attribution';
+import axios from 'axios';
 
 const Widget = ({ type }) => {
-  let data;
+  const [count, setCount] = useState(0);
 
-  //temporary
-  const amount = 100;
-  const diff = 20;
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/count/${type}`);
+      setCount(response.data.count);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  let data;
 
   switch (type) {
     case "user":
+      
       data = {
         title: "USERS",
-        
         icon: (
           <PersonOutlinedIcon
             className="icons"
@@ -29,9 +41,9 @@ const Widget = ({ type }) => {
       };
       break;
     case "books":
+      
       data = {
         title: "BOOKS",
-       
         icon: (
           <LibraryBooksIcon
             className="icons"
@@ -46,7 +58,6 @@ const Widget = ({ type }) => {
     case "rented":
       data = {
         title: "RENTED",
-       
         icon: (
           <ShoppingCartOutlinedIcon
             className="icons"
@@ -57,8 +68,8 @@ const Widget = ({ type }) => {
       break;
     case "authors":
       data = {
+        
         title: "Authors",
-       
         icon: (
           <AttributionIcon
             className="icons"
@@ -78,16 +89,9 @@ const Widget = ({ type }) => {
     <div className="widget">
       <div className="left">
         <span className="title">{data.title}</span>
-        <span className="counter">
-       {amount}
-        </span>
-        <span className="link">{data.link}</span>
+        <span className="counter">{count}</span>
       </div>
       <div className="right">
-        <div className="percentage positive">
-          <KeyboardArrowUpIcon />
-          {diff} %
-        </div>
         {data.icon}
       </div>
     </div>

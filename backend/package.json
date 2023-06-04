@@ -9,7 +9,11 @@
   "author": "akshay m m",
   "license": "ISC",
   "dependencies": {
+<<<<<<< Updated upstream
     "@ajayos/nodemon": "github:ajayos/nodemon",
+=======
+    "@ajayos/nodemon": "^0.0.5",
+>>>>>>> Stashed changes
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",

@@ -59,12 +59,21 @@ const Userlist = () => {
       <table>
         <thead>
           <tr>
+<<<<<<< Updated upstream
             <th>ID</th>&nbsp;
             <th>Name</th>&nbsp;
             <th>Email</th>&nbsp;
             
             <th>Action</th>&nbsp;
           </tr>&nbsp;
+=======
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>PHONENUMBER</th>
+            <th>Action</th>
+          </tr>
+>>>>>>> Stashed changes
         </thead>
         <tbody>
           {users.map((user) => (
@@ -97,12 +106,25 @@ const Userlist = () => {
               </td>&nbsp;
               <td>&nbsp;
                 {editingUserId === user._id ? (
+                  <input
+                    type="text"
+                    name="phonenumber"
+                    value={editedUser.phonenumber || ''}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  user.phonenumber
+                )}
+              </td>
+              <td>
+                {editingUserId === user.id ? (
                   <>
-                    <button onClick={handleSave}>Save</button>
-                    <button onClick={handleCancel}>Cancel</button>
+                    
                   </>
                 ) : (
                   <>
+                  <button onClick={handleSave}>Save</button>
+                    <button onClick={handleCancel}>Cancel</button>
                     <button onClick={() => handleEdit(user)}>Edit</button>
                     <button onClick={() => handleDelete(user._id)}>Delete</button>
                   </>
