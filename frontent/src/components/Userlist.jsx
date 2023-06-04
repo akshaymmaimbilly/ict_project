@@ -57,24 +57,24 @@ const Userlist = () => {
     <div>
       <h1>User List</h1>
       <table>
-        <thead>
+     
           <tr>
-<<<<<<< Updated upstream
+
             <th>ID</th>&nbsp;
             <th>Name</th>&nbsp;
             <th>Email</th>&nbsp;
             
             <th>Action</th>&nbsp;
           </tr>&nbsp;
-=======
+          <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
             <th>PHONENUMBER</th>
             <th>Action</th>
           </tr>
->>>>>>> Stashed changes
-        </thead>
+
+        
         <tbody>
           {users.map((user) => (
             <tr key={user._id}>
