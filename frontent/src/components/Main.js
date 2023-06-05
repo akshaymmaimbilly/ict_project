@@ -14,6 +14,8 @@ import { motion } from "framer-motion";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import "./book.css";
+import Modal from 'react-modal';
+Modal.setAppElement('#root'); // Set the app root element for accessibility
 
 const Main = () => {
   const [search, setSearch] = useState("");
@@ -21,6 +23,15 @@ const Main = () => {
   const [blogs, setBlogs] = useState([]);
   const [comment, setComment] = useState("");
   const [likes, setLikes] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   const fetchBooks = async () => {
     try {
@@ -81,10 +92,11 @@ const Main = () => {
             style={{ width: "200px", height: "50px" }}
             alt="Logo"
           />
+          
         </div>
         <ul className="nav-links">
           <li className="nav-item">
-            <Button onClick={() => window.location.href = "/addbooks"}><a href="#">Home</a></Button>
+            <Button onClick={() => window.location.href = "/"}><a href="#">Home</a></Button>
           </li>
           <li className="nav-item">
             <a href="#">About</a>
@@ -111,12 +123,20 @@ const Main = () => {
           </h1>
         </div>
       </div>
-
+<TextField
+              id="search-input"
+              label="Search Books"
+              variant="outlined"
+              size='10px'
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="search-input"
+            />
       <div>
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 3fr))",
             gap: "20px",
           }}
         >
@@ -128,26 +148,27 @@ const Main = () => {
             return (
               <motion.div
                 key={_id}
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
+                initial={{ scale: 0.10, opacity: 10}}
+                animate={{ scale: 1, opacity: 10 }}
                 transition={{ duration: 0.5 }}
               >
-                <Card style={{margin:'50px'}}
+                <Card style={{margin:'0px'}}
                   sx={{
-                    maxWidth: 345,
-                    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.9)",
+                    maxWidth: 500,
+                    boxShadow: "10px 10px 15px rgba(0, 0, 0, 0.9)",
                   }}
                 >
                   <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom variant="h3" component="div">
                       {bookname}
                     </Typography>
-                    <Typography variant="h6" color="text.secondary">
+                    <Typography variant="h5" color="text.secondary">
                       {author}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="" color="text.secondary">
                       {genre}
                     </Typography>
+                    
                   </CardContent>
                   <Divider />
 
@@ -168,7 +189,7 @@ const Main = () => {
                   <Box p={2}>
                     <Typography variant="subtitle1">Comments:</Typography>
                     {comments.map((comment) => (
-                      <Typography key={comment._id} variant="body2">
+                      <Typography key={comment._id} variant="h6">
                         {comment.text}
                       </Typography>
                     ))}
@@ -181,14 +202,23 @@ const Main = () => {
                         onChange={handleCommentChange}
                         fullWidth
                       />
+                      
                       <Button
                         type="submit"
                         variant="contained"
                         color="primary"
-                        size="small"
+                        size=""
                       >
                         Submit
                       </Button>
+                      <button onClick={openModal}>View Book Details</button>
+                    <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+                     <div key={blogs._id}></div>
+                      <h1>{blogs.bookname}</h1>
+                      <p>{blogs.price}</p>
+                      <p>{blogs.description}</p>
+                      <button onClick={closeModal}>Close</button>
+                    </Modal>
                     </form>
                   </Box>
                 </Card>

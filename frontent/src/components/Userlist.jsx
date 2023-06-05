@@ -64,6 +64,82 @@ const Userlist = () => {
       console.error('Error deleting user:', error);
     }
   };
+  console.log(users)
+  return (
+    <div>
+      <h1>User List</h1>
+      <table>
+     
+          <tr>
+<<<<<<< HEAD
+
+=======
+>>>>>>> parent of db46e46 (04.06.2023)
+            <th>ID</th>&nbsp;
+            <th>Name</th>&nbsp;
+            <th>Email</th>&nbsp;
+            
+            <th>Action</th>&nbsp;
+          </tr>&nbsp;
+<<<<<<< HEAD
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>PHONENUMBER</th>
+            <th>Action</th>
+          </tr>
+
+        
+=======
+        </thead>
+>>>>>>> parent of db46e46 (04.06.2023)
+        <tbody>
+          {users.map((user) => (
+            <tr key={user._id}>
+              <td>{user._id}</td>&nbsp;
+              <td>
+                {editingUserId === user._id ? (
+                  <input
+                    type="text"
+                    name="name"
+                    value={editedUser.username || ''}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  user.username
+                )}
+              </td>
+              <td>{ user.phonenumber }</td>&nbsp;
+              <td>&nbsp;
+                {editingUserId === user._id ? (
+                  <input
+                    type="email"
+                    name="email"
+                    value={editedUser.email || ''}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  user.email
+                )}
+              </td>&nbsp;
+              <td>&nbsp;
+                {editingUserId === user._id ? (
+                  <>
+                    <button onClick={handleSave}>Save</button>
+                    <button onClick={handleCancel}>Cancel</button>
+                  </>
+                ) : (
+                  <>
+                    <button onClick={() => handleEdit(user)}>Edit</button>
+                    <button onClick={() => handleDelete(user._id)}>Delete</button>
+                  </>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
   
   const columns = [
     { field: 'id', headerName: 'ID', width: 100 },
