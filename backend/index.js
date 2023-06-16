@@ -193,7 +193,7 @@ app.get("/viewusers", async (req, res) => {
 
 app.put("/users/:id", async (req, res) => {
   
-  const { name, email } = req.body;
+  const { name, email,phonenumber } = req.body;
 
   try {
     const user = await userModel.findById(id);
@@ -203,6 +203,7 @@ app.put("/users/:id", async (req, res) => {
 
     user.name = name;
     user.email = email;
+    user.contactInfo = phonenumber;
     await user.save();
 
     res.json(user);

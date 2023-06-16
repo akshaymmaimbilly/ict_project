@@ -1,21 +1,16 @@
 import "./navbar.scss"
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
-import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
-import { DarkModeContext } from "../../context/darkModeContext";
-import { useContext, useEffect, useState } from "react";
+// import { DarkModeContext } from "../../context/darkModeContext";
+import {  useEffect, useState } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 
 
 const Navbar = () => {
-  const { dispatch } = useContext(DarkModeContext);
-var [light,setlight] = useState(false);
-var [btn,setBtn] = useState(<DarkModeOutlinedIcon  style={{fontSize: "30px"}}/>);
 
 const [anchorEl, setAnchorEl] = useState(null);
 const handleClick = (event) => {
@@ -38,22 +33,7 @@ useEffect(() => {
     window.removeEventListener("click", handleWindowClick);
   };
 }, [anchorEl]);
-function mode () {
-  console.log(light);
-console.log("clicked");
-  setlight(!light);
- if(light===true){
-  console.log("light is true");
-  setBtn(< DarkModeOutlinedIcon style={{fontSize: "30px"}}/>);
- }
- else if(light===false){
-  console.log("light is false");
-  setBtn(< LightModeOutlinedIcon style={{fontSize: "30px"}}/>);
 
- }
-
-}
-console.log(light);
 
   return (
     <div className='navbars'>
@@ -66,9 +46,6 @@ console.log(light);
         <div className="item">
         <LanguageOutlinedIcon className='icon'/>English
         </div>
-        <div className="item" onClick={() => dispatch({ type: "TOGGLE" })}>
-          <div className="icon" onClick={() => mode()}>{btn}  </div>
-      </div>
       
         <div className="item">
         <NotificationsNoneOutlinedIcon className='icon'  onClick={handleClick}/>
@@ -79,9 +56,9 @@ console.log(light);
         className="dropdown-menu" 
         
       >
-                <div className="dropdown-header">Notification</div>
+        <div className="dropdown-header">Notification</div>
 
-        <MenuItem onClick={handleClose}  className="dropdown-menu-item">Option 12222222222222222223333zdxfgchvjbknlm;,xgfchvjbknlmghbjn32</MenuItem>
+        <MenuItem onClick={handleClose}  className="dropdown-menu-item">Option 1</MenuItem>
         <MenuItem onClick={handleClose}  className="dropdown-menu-item">Option 2</MenuItem>
         <MenuItem onClick={handleClose}  className="dropdown-menu-item">Option 3</MenuItem>
       </Menu>

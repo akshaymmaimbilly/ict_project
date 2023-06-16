@@ -9,13 +9,17 @@ import {
   Typography,
   TextField,
   Button,
+  TableCell,
+  TableRow,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
+import {  Table, TableBody,  TableContainer, TableHead } from '@mui/material';
 import "./book.css";
-import Modal from 'react-modal';
-Modal.setAppElement('#root'); // Set the app root element for accessibility
+import Modal from "react-modal";
+import "./css.css";
+Modal.setAppElement("#root"); // Set the app root element for accessibility
 
 const Main = () => {
   const [search, setSearch] = useState("");
@@ -24,6 +28,7 @@ const Main = () => {
   const [comment, setComment] = useState("");
   const [likes, setLikes] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null); // Added state for selected book
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -83,6 +88,11 @@ const Main = () => {
     return likes.includes(bookId);
   };
 
+  const handleBookClick = (book) => {
+    setSelectedBook(book);
+    openModal();
+  };
+
   return (
     <div>
       <nav className="navbar">
@@ -92,11 +102,12 @@ const Main = () => {
             style={{ width: "200px", height: "50px" }}
             alt="Logo"
           />
-          
         </div>
         <ul className="nav-links">
           <li className="nav-item">
-            <Button onClick={() => window.location.href = "/"}><a href="#">Home</a></Button>
+            <Button onClick={() => (window.location.href = "/")}>
+              <a href="#">Home</a>
+            </Button>
           </li>
           <li className="nav-item">
             <a href="#">About</a>
@@ -105,13 +116,17 @@ const Main = () => {
             <a href="#">Contact</a>
           </li>
           <li className="nav-item">
-            <a href="#" onClick={() => window.location.href = "/login"}>logout</a>
+          <button className="button-icon" onClick={() => (window.location.href = "/edituser")}>User Settings
+          
+     
+    </button>
           </li>
           <li className="nav-item">
-            <a href="#" className="last">
+            <a href="#" onClick={() => (window.location.href = "/login")}>
               logout
             </a>
           </li>
+          
         </ul>
       </nav>
 
@@ -123,15 +138,15 @@ const Main = () => {
           </h1>
         </div>
       </div>
-<TextField
-              id="search-input"
-              label="Search Books"
-              variant="outlined"
-              size='10px'
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="search-input"
-            />
+      <TextField
+        id="search-input"
+        label="Search Books"
+        variant="outlined"
+        size="10px"
+        value={search}
+        onChange={(e) => setSearch(selectedBook.bookname.value)}
+        className="search-input"
+      />
       <div>
         <div
           style={{
@@ -141,18 +156,18 @@ const Main = () => {
           }}
         >
           {blogs.map((book) => {
-            const { _id, bookname, author, genre, comments } = book;
-            const likeCount = comments.filter((comment) => comment.likes > 0)
-              .length;
+            const { _id, bookname, author, genre, comments, description, price, rented } = book;
+            const likeCount = comments.filter((comment) => comment.likes > 0).length;
 
             return (
               <motion.div
                 key={_id}
-                initial={{ scale: 0.10, opacity: 10}}
+                initial={{ scale: 0.1, opacity: 10 }}
                 animate={{ scale: 1, opacity: 10 }}
                 transition={{ duration: 0.5 }}
               >
-                <Card style={{margin:'0px'}}
+                <Card
+                  style={{ margin: "0px" }}
                   sx={{
                     maxWidth: 500,
                     boxShadow: "10px 10px 15px rgba(0, 0, 0, 0.9)",
@@ -168,7 +183,6 @@ const Main = () => {
                     <Typography variant="" color="text.secondary">
                       {genre}
                     </Typography>
-                    
                   </CardContent>
                   <Divider />
 
@@ -202,7 +216,6 @@ const Main = () => {
                         onChange={handleCommentChange}
                         fullWidth
                       />
-                      
                       <Button
                         type="submit"
                         variant="contained"
@@ -211,14 +224,12 @@ const Main = () => {
                       >
                         Submit
                       </Button>
-                      <button onClick={openModal}>View Book Details</button>
-                    <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
-                     <div key={blogs._id}></div>
-                      <h1>{blogs.bookname}</h1>
-                      <p>{blogs.price}</p>
-                      <p>{blogs.description}</p>
-                      <button onClick={closeModal}>Close</button>
-                    </Modal>
+                      <button onClick={(event) => {
+  event.preventDefault();
+  handleBookClick(book);
+}}>
+  View Book Details
+</button>
                     </form>
                   </Box>
                 </Card>
@@ -228,11 +239,50 @@ const Main = () => {
         </div>
       </div>
 
-      {/* <img src="./images/bg2.png" alt="" /> */}
-
-      {/* <div className="container">Corrected code goes here</div> */}
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+        {selectedBook && (
+          <div key={selectedBook._id}>
+            <h1>{selectedBook.bookname}</h1>
+            <h4>price: {selectedBook.price}</h4>
+            <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+             
+              <TableCell sx={{fontSize:'25px'}}  >
+                Description
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+             
+                  <TableRow>
+                    <TableCell sx={{fontSize:'25px'}}>
+                      {selectedBook.description}
+                    </TableCell>
+                  </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+            <p>{selectedBook.rented ? "Rented" : "Not Rented"}</p>
+            <button onClick={closeModal}>Close</button>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };
 
 export default Main;
+              
+              
+              
+            
+              
+                
+              
+            
+                   
+                   
+                   
+                    

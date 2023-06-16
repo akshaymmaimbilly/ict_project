@@ -71,7 +71,7 @@ const Widget = ({ type }) => {
       };
       handleClick = () => {
         console.log("Books link clicked!");
-        window.location.href = "/addbooks";
+        window.location.href = "/viewbooks";
       };
       break;
     case "rented":

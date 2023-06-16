@@ -102,7 +102,7 @@ function Login() {
             nav("/admin");
             alert("admin login successfull.....");
           } else { // Check if the user is a regular user
-            nav("/books");
+            nav("/viewbooks");
           }
         } else if (res.status === 202) {
           setUser(res.data);
